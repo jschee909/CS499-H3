@@ -12,7 +12,7 @@ import pandas as pd
 input_file = 'traffic_data.txt'
 
 
-fd = pd.DataFrame(columns = ['Freeway', 'Direction','Day', 'Time'])
+fd = pd.DataFrame(columns = ['Freeway', 'Direction','Day', 'Time','Traffic'])
 
 # Reading the data
 a = []
