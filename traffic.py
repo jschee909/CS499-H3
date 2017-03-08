@@ -6,9 +6,13 @@ from sklearn.svm import SVR
 from flask import Flask, render_template, request
 import matplotlib.pyplot as plt 
 from sklearn import svm
+import pandas as pd
+
 
 input_file = 'traffic_data.txt'
 
+
+fd = pd.DataFrame(columns = ['Freeway', 'Direction','Day', 'Time'])
 
 # Reading the data
 a = []
