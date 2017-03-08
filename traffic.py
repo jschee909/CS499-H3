@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 
 input_file = 'traffic_data.txt'
 
+
 # Reading the data
 X = []
 Y = []
@@ -30,10 +31,14 @@ def index():
 
 @app.route('/traffic.py')
 def data():
-  print 'Data Submitted'
+  print('Data Submitted')
   req = request.args.get('wanted')
+  arg = req.split(',')
+  str = ','.join(arg)
+  return str
 
-  return 'Thank You.'
+
+
 
 if __name__ == '__main__':
   app.run(debug=True)
