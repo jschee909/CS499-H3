@@ -5,23 +5,40 @@ from sklearn import preprocessing
 from sklearn.svm import SVR
 from flask import Flask, render_template, request
 import matplotlib.pyplot as plt 
+from sklearn import svm
 
 input_file = 'traffic_data.txt'
 
 
 # Reading the data
-X = []
-Y = []
+a = []
+b = []
 count = 0
 with open(input_file, 'r') as f:
     for line in f.readlines():
         data = line[:-1].split(',')
-        X.append(data[:])
-        Y.append(data[-1])
+        a.append(data[:-1])
+        b.append(data[-1])
 
-Y[-1] = 9
+b[-1] = '9'
+print(a)
+print(b)
+
+X = []
+Y = []
+for k in a:
+    X.append([int(v) for v in k])
+    
+
+for k in b:
+    Y.append([int(v) for v in k])
+
 print(X)
 print(Y)
+
+
+
+
 
 app = Flask(__name__)
 
