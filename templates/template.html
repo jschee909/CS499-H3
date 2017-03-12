@@ -1,10 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic Prediction</title>
+</head>
+<body>
+  <form action="/getData" method="POST">
+      <input type="text" name="ID" placeholder="Road ID"><br>
+      <input type="text" name="dir" placeholder="Direction"><br>
+      <input type="text" name="day" placeholder="Day"><br>
+      <input type="text" name="time" placeholder="Time"><br>
+      <input type="text" name="status" placeholder="Traffic Status"><br>
+      <input type="submit" value="Add Data">
+  </form>
+  <form action="/predictTraffic" method="POST">
+      <input type="text" name="ID" placeholder="Road ID"><br>
+      <input type="text" name="dir" placeholder="Direction"><br>
+      <input type="text" name="day" placeholder="Day"><br>
+      <input type="text" name="time" placeholder="Time"><br>
+      <input type="submit" value="Add Prediction">
+  </form>
 
-<title>Traffic Prediction</title> 
-<meta charset=utf-8> 
-
-
-<form action="/traffic.py">
-Please Follow Format Of <input type="text" name="wanted" value="1,2,3,4"><br>
-<input type="submit" value="Submit">
-</form>
+</body>
+</html>

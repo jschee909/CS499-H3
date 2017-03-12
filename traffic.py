@@ -1,64 +1,52 @@
-# SVM regressor to estimate traffic
 
-import numpy as np
-from sklearn import preprocessing
-from sklearn.svm import SVR
-from flask import Flask, render_template, request
-import matplotlib.pyplot as plt 
-from sklearn import svm
-import pandas as pd
-
-
-input_file = 'traffic_data.txt'
-
-
-fd = pd.DataFrame(columns = ['Freeway', 'Direction','Day', 'Time','Traffic'])
-
-# Reading the data
-a = []
-b = []
-count = 0
-with open(input_file, 'r') as f:
-    for line in f.readlines():
-        data = line[:-1].split(',')
-        a.append(data[:-1])
-        b.append(data[-1])
-
-b[-1] = '9'
-print(a)
-print(b)
-
-X = []
-Y = []
-for k in a:
-    X.append([int(v) for v in k])
-    
-
-for k in b:
-    Y.append([int(v) for v in k])
-
-print(X)
-print(Y)
-
-
-
+from sklearn.svm import SVC
+from flask import Flask, request, render_template
 
 
 app = Flask(__name__)
+
+dPoints = []
+output = []
+model = SVC(gamma=0.001, C=100.)
+
 
 @app.route('/')
 def index():
   return render_template('template.html')
 
-@app.route('/traffic.py')
-def data():
-  print('Data Submitted')
-  req = request.args.get('wanted')
-  arg = req.split(',')
-  str = ','.join(arg)
-  return str
+
+@app.route('/getData', methods=['POST'])
+def getData():
+    ID = request.form['ID']
+    dir = request.form['dir']
+    day = request.form['day']
+    time = request.form['time']
+    status = request.form['status']
+    dPoints.append([str(ID), str(dir), str(day), str(time)])
+    output.append(int(status))
+
+    return "Added data"
 
 
+@app.route('/predictTraffic', methods=['POST'])
+def predictTraffic():
+    if (len(dPoints) <= 1 ):
+        return ("We need at least two to make a prediction", 400)
+    else:
+        model.fit(dPoints, output)
+
+        ID = request.form['ID']
+        dir = request.form['dir']
+        day = request.form['day']
+        time = request.form['time']
+        print("")
+        prediction = model.predict([[str(ID), str(dir), str(day), str(time)]])
+
+        print("Datapoints:", dPoints)
+        print("Outputs: ", output)
+        print("Predicted Traffic Status: ", prediction)
+
+        return ("Prediction: " + str(prediction), 200)
 
 
 if __name__ == '__main__':
